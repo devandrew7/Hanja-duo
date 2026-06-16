@@ -1440,6 +1440,10 @@ a {
 /* ==========================================================================
    MODALS
    ========================================================================== */
+body.modal-open {
+  overflow: hidden;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1470,6 +1474,7 @@ a {
   max-height: 90vh;
   display: flex;
   flex-direction: column;
+  overflow-y: auto; /* Enable scrollbar on the modal card itself */
 }
 
 .modal-close-btn {
@@ -1516,8 +1521,6 @@ a {
 }
 
 .modal-chars-section {
-  flex: 1;
-  overflow-y: auto;
   margin-bottom: 1.5rem;
   padding-right: 0.5rem;
 }

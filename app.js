@@ -427,10 +427,12 @@ function showLevelModal(levelId, isCompleted, isUnlocked) {
   });
   
   modal.classList.remove("hidden");
+  document.body.classList.add("modal-open");
 }
 
 function hideLevelModal() {
   document.getElementById("level-modal").classList.add("hidden");
+  document.body.classList.remove("modal-open");
   currentModalLevelId = null;
   selectedCardSetRange = null; // Reset selection
 }
