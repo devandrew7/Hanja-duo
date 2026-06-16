@@ -1,0 +1,280 @@
+[
+  {
+    "word": "住宅",
+    "reading": "주택",
+    "meaning": "사람이들어가살수있게지은건물",
+    "type": "reading"
+  },
+  {
+    "word": "兩親",
+    "reading": "양친",
+    "meaning": "부친과모친을아울러이르는말",
+    "type": "reading"
+  },
+  {
+    "word": "支局",
+    "reading": "지국",
+    "meaning": "본사나본국에서갈라져나가그관할아래있으면서사무를맡아보는곳",
+    "type": "reading"
+  },
+  {
+    "word": "査察",
+    "reading": "사찰",
+    "meaning": "「1」조사하여살핌",
+    "type": "reading"
+  },
+  {
+    "word": "切實",
+    "reading": "절실",
+    "meaning": "「1」느낌이나생각이뼈저리게강렬한상태에있다",
+    "type": "reading"
+  },
+  {
+    "word": "着眼",
+    "reading": "착안",
+    "meaning": "어떤일을주의하여봄",
+    "type": "reading"
+  },
+  {
+    "word": "朗讀",
+    "reading": "낭독",
+    "meaning": "낭독의 의미",
+    "type": "reading"
+  },
+  {
+    "word": "冷溫",
+    "reading": "냉온",
+    "meaning": "「1」찬기운과따뜻한기운을아울러이르는말",
+    "type": "reading"
+  },
+  {
+    "word": "神仙",
+    "reading": "신선",
+    "meaning": "도(道)를닦아서현실의인간세계를떠나자연과벗하며산다는상상의사람",
+    "type": "reading"
+  },
+  {
+    "word": "充當",
+    "reading": "충당",
+    "meaning": "모자라는것을채워넣음",
+    "type": "definition"
+  },
+  {
+    "word": "禮樂",
+    "reading": "예악",
+    "meaning": "예법과음악을이르는말",
+    "type": "definition"
+  },
+  {
+    "word": "政勢",
+    "reading": "정세",
+    "meaning": "정치상의동향이나형세",
+    "type": "definition"
+  },
+  {
+    "word": "加害",
+    "reading": "가해",
+    "meaning": "다른사람의생명이나신체,재산,명예따위에해를끼침.",
+    "type": "spelling"
+  },
+  {
+    "word": "時限",
+    "reading": "시한",
+    "meaning": "일정한동안의끝을정한기간이나시각.",
+    "type": "spelling"
+  },
+  {
+    "word": "美觀",
+    "reading": "미관",
+    "meaning": "아름답고훌륭한풍경.",
+    "type": "spelling"
+  },
+  {
+    "word": "週末",
+    "reading": "주말",
+    "meaning": "한주일의끝무렵",
+    "type": "sentence_reading",
+    "sentence": "지난週末에친구와영화를보았다."
+  },
+  {
+    "word": "永久",
+    "reading": "영구",
+    "meaning": "어떤상태가시간상으로무한히이어짐",
+    "type": "sentence_reading",
+    "sentence": "진리란永久불변한것이다."
+  },
+  {
+    "word": "順序",
+    "reading": "순서",
+    "meaning": "「1」정하여진기준에서말하는전후,좌우,상하따위의차례관계",
+    "type": "sentence_reading",
+    "sentence": "모든일이順序대로착착진행되었다."
+  },
+  {
+    "word": "助言",
+    "reading": "조언",
+    "meaning": "말로거들거나깨우쳐주어서도움",
+    "type": "sentence_reading",
+    "sentence": "선생님은助言와(과)격려를아끼지않았다."
+  },
+  {
+    "word": "願書",
+    "reading": "원서",
+    "meaning": "지원하거나청원하는내용을적은서류",
+    "type": "sentence_spelling",
+    "sentence": "다음주까지입학원서를제출하여야한다."
+  },
+  {
+    "word": "競技",
+    "reading": "경기",
+    "meaning": "일정한규칙아래기량과기술을겨룸",
+    "type": "sentence_spelling",
+    "sentence": "비때문에야구경기가연기되었다."
+  },
+  {
+    "word": "夜景",
+    "reading": "야경",
+    "meaning": "밤의경치",
+    "type": "sentence_spelling",
+    "sentence": "남산타워에서보는야경은너무아름답다."
+  },
+  {
+    "word": "案件",
+    "reading": "안건",
+    "meaning": "토의하거나조사하여야할사실",
+    "type": "reading"
+  },
+  {
+    "word": "省察",
+    "reading": "성찰",
+    "meaning": "자기의마음을반성하고살핌",
+    "type": "reading"
+  },
+  {
+    "word": "冷待",
+    "reading": "냉대",
+    "meaning": "냉대의 의미",
+    "type": "reading"
+  },
+  {
+    "word": "餘談",
+    "reading": "여담",
+    "meaning": "이야기하는과정에서본줄거리와관계없이흥미로하는딴이야기",
+    "type": "reading"
+  },
+  {
+    "word": "朗報",
+    "reading": "낭보",
+    "meaning": "기쁜기별이나소식",
+    "type": "reading"
+  },
+  {
+    "word": "商船",
+    "reading": "상선",
+    "meaning": "삯을받고사람이나짐을나르는데에쓰는배",
+    "type": "reading"
+  },
+  {
+    "word": "停止",
+    "reading": "정지",
+    "meaning": "「1」움직이고있던것이멎거나그침",
+    "type": "reading"
+  },
+  {
+    "word": "奉養",
+    "reading": "봉양",
+    "meaning": "부모나조부모와같은웃어른을받들어모심",
+    "type": "reading"
+  },
+  {
+    "word": "每週",
+    "reading": "매주",
+    "meaning": "각각의주마다",
+    "type": "reading"
+  },
+  {
+    "word": "熱量",
+    "reading": "열량",
+    "meaning": "열에너지의양",
+    "type": "definition"
+  },
+  {
+    "word": "助長",
+    "reading": "조장",
+    "meaning": "바람직하지않은일을더심해지도록부추김",
+    "type": "definition"
+  },
+  {
+    "word": "宿願",
+    "reading": "숙원",
+    "meaning": "오래전부터품어온염원",
+    "type": "definition"
+  },
+  {
+    "word": "獨白",
+    "reading": "독백",
+    "meaning": "배우가상대역없이혼자말하는행위.",
+    "type": "spelling"
+  },
+  {
+    "word": "通念",
+    "reading": "통념",
+    "meaning": "일반에널리통하는생각.",
+    "type": "spelling"
+  },
+  {
+    "word": "局限",
+    "reading": "국한",
+    "meaning": "범위를일정한부분에한정함.",
+    "type": "spelling"
+  },
+  {
+    "word": "景觀",
+    "reading": "경관",
+    "meaning": "「1」산이나들,강,바다따위의자연이나지역의풍경",
+    "type": "sentence_reading",
+    "sentence": "설악산의주변景觀이(가)수려하다."
+  },
+  {
+    "word": "早期",
+    "reading": "조기",
+    "meaning": "이른시기",
+    "type": "sentence_reading",
+    "sentence": "모든병은早期에치료하는것이좋다."
+  },
+  {
+    "word": "精誠",
+    "reading": "정성",
+    "meaning": "온갖힘을다하려는참되고성실한마음",
+    "type": "sentence_reading",
+    "sentence": "精誠이지극하면하늘도움직인다."
+  },
+  {
+    "word": "許可",
+    "reading": "허가",
+    "meaning": "「1」행동이나일을하도록허용함",
+    "type": "sentence_reading",
+    "sentence": "학교앞에오락실을許可해서는안된다."
+  },
+  {
+    "word": "湖南",
+    "reading": "호남",
+    "meaning": "전라남도와전라북도를아울러이르는말",
+    "type": "sentence_spelling",
+    "sentence": "호남지방은한반도의남부에자리잡고있다."
+  },
+  {
+    "word": "火星",
+    "reading": "화성",
+    "meaning": "태양에서넷째로가까운행성",
+    "type": "sentence_spelling",
+    "sentence": "화성은지구와가장비슷한환경을가진행성이다."
+  },
+  {
+    "word": "個性",
+    "reading": "개성",
+    "meaning": "다른사람이나개체와구별되는고유의특성",
+    "type": "sentence_spelling",
+    "sentence": "무조건유행을따르기보다는자신의개성을살리는것이중요하다."
+  }
+]

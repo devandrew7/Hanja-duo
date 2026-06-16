@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한자 듀오 - 한자시험 반복 학습관</title>
+  <!-- Google Fonts: Outfit and Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Canvas Confetti for celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo" id="logo-btn">
+        <i class="fa-solid fa-graduation-cap logo-icon"></i>
+        <span class="logo-text">한자듀오</span>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs">
+        <button class="tab-btn active" data-tab="dashboard">
+          <i class="fa-solid fa-map-location-dot"></i> 학습하기
+        </button>
+        <button class="tab-btn" data-tab="exams">
+          <i class="fa-solid fa-file-signature"></i> 기출문제
+        </button>
+        <button class="tab-btn" data-tab="review">
+          <i class="fa-solid fa-book-open"></i> 오답노트
+        </button>
+      </nav>
+
+      <!-- User Stats -->
+      <div class="user-stats">
+        <div class="stat-badge streak" title="연속 학습 스트릭">
+          <i class="fa-solid fa-fire icon-fire"></i>
+          <span id="nav-streak">0</span>일
+        </div>
+        <div class="stat-badge xp" title="누적 경험치">
+          <i class="fa-solid fa-star icon-star"></i>
+          <span id="nav-xp">0</span> XP
+        </div>
+        <div id="session-hearts-container" class="stat-badge hearts hidden" title="남은 목숨">
+          <div id="nav-hearts"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="app-main">
+    
+    <!-- 1. DASHBOARD VIEW (Roadmap) -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="welcome-banner">
+        <div class="banner-content">
+          <h1>안녕하세요, 오늘도 한자 공부 시작해볼까요? 🔥</h1>
+          <p>하루 10분, 반복 학습을 통해 자연스럽게 급수별 한자와 어휘를 마스터하세요.</p>
+        </div>
+        <div class="banner-stat">
+          <div class="today-xp-circle">
+            <span id="today-xp-val">0</span>
+            <span class="label">오늘의 XP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resume Session Banners Container -->
+      <div class="resume-banners-container" id="resume-banners-container">
+        <!-- Dynamically populated in app.js -->
+      </div>
+
+      <div class="roadmap-container">
+        <h2 class="section-title"><i class="fa-solid fa-map-signs"></i> 급수별 학습 로드맵</h2>
+        <p class="section-subtitle">하위 급수부터 순서대로 잠금 해제하며 학습을 완성해 보세요.</p>
+        
+        <!-- Interactive Node Path -->
+        <div class="roadmap-path" id="roadmap-path">
+          <!-- Level Nodes will be dynamically injected here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. STUDY SESSION VIEW (Duolingo Card Session) -->
+    <section id="session-view" class="view-section hidden">
+      <div class="session-container">
+        <!-- Session Header (Progress Bar and Close Button) -->
+        <div class="session-header">
+          <button class="close-session-btn" id="close-session-btn" title="학습 종료">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar-fill" id="session-progress-fill"></div>
+          </div>
+          <div class="session-progress-text" id="session-progress-text">1 / 10</div>
+        </div>
+
+        <!-- A. Quiz Workspace -->
+        <div id="quiz-workspace" class="workspace-section">
+          <div class="card-box" id="question-card">
+            <!-- Question Content Injected Here -->
+          </div>
+        </div>
+
+        <!-- B. Flashcard Workspace -->
+        <div id="flashcard-workspace" class="workspace-section hidden">
+          <div class="flashcard-box">
+            <div class="flashcard" id="flashcard-card">
+              <div class="flashcard-back-header" id="flashcard-back-level">8급 한자</div>
+              <div class="flashcard-char" id="flashcard-char">九</div>
+              <div class="flashcard-info" id="flashcard-info">
+                <div class="flashcard-hunum" id="flashcard-back-hunum">아홉 구</div>
+                <button class="flashcard-check-btn" id="flashcard-check-btn">
+                  <i class="fa-regular fa-bookmark"></i> 못 외웠어요
+                </button>
+              </div>
+              <div class="flashcard-tip" id="flashcard-tip">
+                <i class="fa-solid fa-hand-pointer"></i> 카드를 클릭하면 뜻과 음이 보입니다
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Action Bar (Always visible at the bottom) -->
+        <div class="session-footer" id="session-footer">
+          <div class="session-footer-container">
+            <div class="feedback-message" id="feedback-message">
+              <!-- Result Icon & Text -->
+            </div>
+            <button class="btn btn-primary" id="session-action-btn" disabled>정답 확인</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MOCK EXAMS VIEW -->
+    <section id="exams-view" class="view-section hidden">
+      <!-- Exam Selection Screen -->
+      <div id="exam-selector-screen">
+        <div class="view-header">
+          <h2 class="view-title"><i class="fa-solid fa-file-signature"></i> 대한민국 한자급수자격검정시험 기출문제</h2>
+          <p class="view-subtitle">대한검정회 4급 가형 실제 기출문항(50문제, 60분)에 도전해 보실 수 있습니다.</p>
+        </div>
+
+        <div class="exam-cards-grid">
+          <!-- Random Generated Exam Card -->
+          <div class="exam-card highlight">
+            <div class="exam-card-badge premium">실전 모의</div>
+            <h3>랜덤 생성 AI 모의고사</h3>
+            <p class="exam-card-meta"><i class="fa-regular fa-clock"></i> 60분 | <i class="fa-solid fa-list-ol"></i> 급수별 문항</p>
+            <p class="exam-card-desc">학습한 한자와 어휘를 기반으로 실제 출제 비율(훈음, 독음 등)에 맞추어 생성되는 실전 테스트입니다.</p>
+            
+            <div class="exam-level-selection" style="margin-top: 1rem; margin-bottom: 1rem; width: 100%; text-align: left;">
+              <label for="exam-random-level" style="font-weight: 700; font-size: 0.9rem; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">목표 급수 선택</label>
+              <select id="exam-random-level" class="level-select-dropdown" style="width: 100%; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-family: var(--font-main); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); background-color: var(--bg-card); cursor: pointer; outline: none; transition: border-color var(--transition-normal);">
+                <option value="8급">8급 (30문항)</option>
+                <option value="7급">7급 (30문항)</option>
+                <option value="6급">6급 (30문항)</option>
+                <option value="준5급">준5급 (40문항)</option>
+                <option value="5급">5급 (40문항)</option>
+                <option value="준4급">준4급 (50문항)</option>
+                <option value="4급" selected>4급 (50문항)</option>
+                <option value="준3급">준3급 (50문항)</option>
+                <option value="3급">3급 (50문항)</option>
+                <option value="준2급">준2급 (50문항)</option>
+                <option value="2급">2급 (50문항)</option>
+                <option value="준1급">준1급 (50문항)</option>
+                <option value="1급">1급 (50문항)</option>
+              </select>
+            </div>
+            
+            <button class="btn btn-accent btn-block start-exam-btn" data-exam="random">모의고사 시작</button>
+          </div>
+
+          <!-- Exam Card 110 -->
+          <div class="exam-card">
+            <div class="exam-card-badge">공식 기출</div>
+            <h3>제 110회 4급 가형</h3>
+            <p class="exam-card-meta"><i class="fa-regular fa-clock"></i> 60분 | <i class="fa-solid fa-list-ol"></i> 50문항</p>
+            <p class="exam-card-desc">2026년 2월 28일 정규시험 문항입니다. 출제 유형을 정교하게 반영하고 상세한 해설을 포함합니다.</p>
+            <button class="btn btn-primary btn-block start-exam-btn" data-exam="110">시험 시작하기</button>
+          </div>
+
+          <!-- Exam Card 111 -->
+          <div class="exam-card">
+            <div class="exam-card-badge">공식 기출</div>
+            <h3>제 111회 4급 가형</h3>
+            <p class="exam-card-meta"><i class="fa-regular fa-clock"></i> 60분 | <i class="fa-solid fa-list-ol"></i> 50문항</p>
+            <p class="exam-card-desc">2026년 5월 23일 정규시험 문항입니다. 최신 문항 경향을 파악하기 위한 기출 연습 세션입니다.</p>
+            <button class="btn btn-primary btn-block start-exam-btn" data-exam="111">시험 시작하기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam Active Testing Screen -->
+      <div id="exam-active-screen" class="hidden">
+        <div class="exam-active-header">
+          <div class="exam-title-area">
+            <h3 id="active-exam-title">제 110회 기출문제 (4급 가형)</h3>
+            <div class="exam-timer" id="exam-timer"><i class="fa-regular fa-clock"></i> 60:00</div>
+          </div>
+          <div class="exam-action-area">
+            <button class="btn btn-danger" id="submit-exam-btn">시험 제출하기</button>
+          </div>
+        </div>
+
+        <div class="exam-workspace">
+          <!-- Left: Current Question Area -->
+          <div class="exam-question-area">
+            <!-- Question Content Card -->
+            <div class="exam-q-card" id="exam-question-card">
+              <!-- Injected question -->
+            </div>
+            <!-- Pagination Controls -->
+            <div class="exam-pagination">
+              <button class="btn btn-secondary" id="exam-prev-btn"><i class="fa-solid fa-chevron-left"></i> 이전</button>
+              <span id="exam-pagination-text">문항 1 / 50</span>
+              <button class="btn btn-secondary" id="exam-next-btn">다음 <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Right: OMR Sheet Grid -->
+          <div class="exam-omr-panel">
+            <h4>답안 마킹 (OMR 시트)</h4>
+            <p class="omr-hint">문항 번호를 클릭해 해당 문제로 빠르게 이동할 수 있습니다.</p>
+            <div class="omr-grid" id="omr-grid">
+              <!-- 50 OMR cells dynamically generated -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exam Report Screen (Results) -->
+      <div id="exam-report-screen" class="hidden">
+        <div class="report-header card">
+          <div class="report-header-flex">
+            <div>
+              <span class="report-badge" id="report-pass-badge">합격</span>
+              <h2 id="report-title">시험 분석 결과 보고서</h2>
+              <p id="report-subtitle">제 110회 대한민국 한자급수자격검정시험 4급 가형</p>
+            </div>
+            <div class="report-score-box">
+              <span class="score-num" id="report-score-val">0 / 50</span>
+              <span class="score-percent" id="report-score-percent">0%</span>
+            </div>
+          </div>
+          
+          <div class="report-summary-stats">
+            <div class="summary-stat-item">
+              <span class="val" id="report-time-taken">0분 0초</span>
+              <span class="lbl">소요 시간</span>
+            </div>
+            <div class="summary-stat-item">
+              <span class="val text-success" id="report-correct-count">0</span>
+              <span class="lbl">맞춘 문항</span>
+            </div>
+            <div class="summary-stat-item">
+              <span class="val text-danger" id="report-wrong-count">0</span>
+              <span class="lbl">틀린 문항</span>
+            </div>
+          </div>
+          
+          <div class="report-buttons">
+            <button class="btn btn-primary" id="report-back-btn">시험 선택 화면으로</button>
+            <button class="btn btn-secondary" id="report-review-wrong-btn">틀린 문항 모아보기</button>
+          </div>
+        </div>
+
+        <div class="exam-review-container">
+          <h3>문항별 상세 해설 및 복습</h3>
+          <div class="exam-review-list" id="exam-review-list">
+            <!-- Questions list with explanations injected here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. REVIEW VIEW (Wrong Words / Bookmark List) -->
+    <section id="review-view" class="view-section hidden">
+      <div class="view-header-row">
+        <div class="view-header">
+          <h2 class="view-title"><i class="fa-solid fa-book-open"></i> 나만의 오답 노트</h2>
+          <p class="view-subtitle">학습 또는 시험 중 틀렸던 한자들을 모아서 개별 복습할 수 있습니다.</p>
+        </div>
+        <div class="review-actions-header" id="review-actions-header">
+          <button class="btn btn-secondary" id="start-quiz-review-btn">
+            <i class="fa-solid fa-circle-question"></i> 퀴즈 오답 복습
+          </button>
+          <button class="btn btn-primary" id="start-card-review-btn">
+            <i class="fa-solid fa-book-open"></i> 못 외운 카드 복습
+          </button>
+        </div>
+      </div>
+
+      <!-- Resume Review Session Banner -->
+      <div class="resume-banner hidden" id="resume-review-banner">
+        <div class="resume-info" id="resume-review-session-info">
+          <!-- Dynamically populated in app.js -->
+        </div>
+        <div class="resume-actions">
+          <button class="btn btn-primary btn-sm" id="resume-review-btn">이어서 하기</button>
+          <button class="btn btn-secondary btn-sm" id="dismiss-review-resume-btn">새로 시작</button>
+        </div>
+      </div>
+
+      <!-- Review Filter Tabs -->
+      <div class="review-filters" id="review-filters">
+        <button class="filter-tab active" data-filter="all">전체보기 (<span id="count-all">0</span>)</button>
+        <button class="filter-tab" data-filter="quiz">퀴즈/시험 오답 (<span id="count-quiz">0</span>)</button>
+        <button class="filter-tab" data-filter="card">카드학습 못 외운 한자 (<span id="count-card">0</span>)</button>
+      </div>
+
+      <!-- Review Management Toolbar -->
+      <div class="review-management-bar hidden" id="review-management-bar">
+        <label class="select-all-label">
+          <input type="checkbox" id="review-select-all-cb">
+          <span>전체 선택</span>
+        </label>
+        <div class="management-actions">
+          <button class="btn btn-secondary btn-sm text-danger" id="delete-selected-btn" disabled>
+            <i class="fa-solid fa-trash"></i> 선택 삭제
+          </button>
+          <button class="btn btn-secondary btn-sm text-danger" id="delete-all-btn">
+            <i class="fa-solid fa-trash-can"></i> 전체 삭제
+          </button>
+        </div>
+      </div>
+
+      <!-- Wrong Cards Grid -->
+      <div class="wrong-words-grid" id="wrong-words-grid">
+        <!-- Cards injected here -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state hidden" id="wrong-words-empty">
+        <div class="empty-icon"><i class="fa-solid fa-heart-circle-check"></i></div>
+        <h3>오답 노트가 깨끗합니다!</h3>
+        <p>틀린 한자가 없습니다. 완벽한 실력을 갖추고 계시군요!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Modals -->
+  <!-- 1. Level Info Modal -->
+  <div class="modal-overlay hidden" id="level-modal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="level-modal-close"><i class="fa-solid fa-xmark"></i></button>
+      <h2 id="modal-level-title">8급 선정한자</h2>
+      <div class="level-meta-row">
+        <span class="level-meta-badge" id="modal-level-count">총 30자</span>
+        <span class="level-meta-badge success" id="modal-level-status">잠금 해제됨</span>
+      </div>
+      <p id="modal-level-desc">기초 단계의 30자 한자로 구성되어 있으며, 초등 및 입문자를 위한 필수 한자입니다.</p>
+      
+      <!-- Characters Grid -->
+      <div class="modal-chars-section">
+        <h3>한자 목록 (<span id="modal-chars-count">0</span>)</h3>
+        <div class="modal-chars-grid" id="modal-chars-grid">
+          <!-- Injected characters -->
+        </div>
+      </div>
+
+      <!-- Study Mode Selector -->
+      <div class="study-mode-selector">
+        <h3>학습 모드 선택</h3>
+        <div class="mode-options">
+          <label class="mode-option">
+            <input type="radio" name="study-mode" value="cumulative" checked>
+            <span class="mode-content">
+              <i class="fa-solid fa-layer-group mode-icon-styled"></i>
+              <span class="mode-text">
+                <span class="mode-title">이전 급수 포함 학습 (누적)</span>
+                <span class="mode-desc">이전 하위 급수의 모든 한자를 포함하여 종합 학습합니다.</span>
+              </span>
+            </span>
+          </label>
+          <label class="mode-option">
+            <input type="radio" name="study-mode" value="new-only">
+            <span class="mode-content">
+              <i class="fa-solid fa-sparkles mode-icon-styled"></i>
+              <span class="mode-text">
+                <span class="mode-title">신출 한자만 학습</span>
+                <span class="mode-desc">이번 급수에 새로 배우는 한자만 집중하여 학습합니다.</span>
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Card Study Set Selector -->
+      <div class="card-set-selector hidden" id="card-set-selector-section">
+        <h3>카드 학습 세트 선택 (50자 단위)</h3>
+        <div class="set-buttons-grid" id="modal-set-buttons-grid">
+          <!-- Dynamically populated set buttons -->
+        </div>
+      </div>
+
+      <div class="modal-actions-grid">
+        <button class="btn btn-secondary btn-block" id="modal-start-study-btn"><i class="fa-solid fa-book-open"></i> 한자 카드 학습</button>
+        <button class="btn btn-primary btn-block" id="modal-start-quiz-btn"><i class="fa-solid fa-circle-question"></i> 객관식 퀴즈 풀기 (+10 XP)</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
