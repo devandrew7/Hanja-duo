@@ -437,7 +437,7 @@ function hideLevelModal() {
 
 function updateCardSetSelector(levelId) {
   const selectorSection = document.getElementById("card-set-selector-section");
-  const buttonsGrid = document.getElementById("modal-set-buttons-grid");
+  const dropdown = document.getElementById("modal-set-dropdown");
   
   // Reset selected set range
   selectedCardSetRange = null;
@@ -447,7 +447,7 @@ function updateCardSetSelector(levelId) {
   
   if (!isSetSelectionApplicable) {
     selectorSection.classList.add("hidden");
-    buttonsGrid.innerHTML = "";
+    if (dropdown) dropdown.innerHTML = "";
     return;
   }
   
@@ -469,49 +469,51 @@ function updateCardSetSelector(levelId) {
   const setSize = getCardSetSizeForLevel(levelId);
   if (poolSize <= setSize) {
     selectorSection.classList.add("hidden");
-    buttonsGrid.innerHTML = "";
+    if (dropdown) dropdown.innerHTML = "";
     return;
   }
   
   selectorSection.classList.remove("hidden");
-  buttonsGrid.innerHTML = "";
-  
-  // Update header text dynamically
-  const header = selectorSection.querySelector("h3");
-  if (header) {
-    header.textContent = `카드 학습 세트 선택 (${setSize}자 단위)`;
-  }
-  
-  // Render "전체" button
-  const allBtn = document.createElement("button");
-  allBtn.className = "set-btn active";
-  allBtn.textContent = `전체 (${poolSize}자)`;
-  allBtn.setAttribute("data-type", "all");
-  allBtn.addEventListener("click", () => {
-    document.querySelectorAll(".set-btn").forEach(btn => btn.classList.remove("active"));
-    allBtn.classList.add("active");
-    selectedCardSetRange = null;
-  });
-  buttonsGrid.appendChild(allBtn);
-  
-  // Render sets based on setSize
-  const setNum = Math.ceil(poolSize / setSize);
-  for (let s = 0; s < setNum; s++) {
-    const startIdx = s * setSize;
-    const endIdx = Math.min((s + 1) * setSize, poolSize);
+  if (dropdown) {
+    dropdown.innerHTML = "";
     
-    const setBtn = document.createElement("button");
-    setBtn.className = "set-btn";
-    setBtn.textContent = `세트 ${s + 1} (${startIdx + 1}~${endIdx})`;
-    setBtn.setAttribute("data-type", "set");
-    setBtn.setAttribute("data-start", startIdx);
-    setBtn.setAttribute("data-end", endIdx);
-    setBtn.addEventListener("click", () => {
-      document.querySelectorAll(".set-btn").forEach(btn => btn.classList.remove("active"));
-      setBtn.classList.add("active");
-      selectedCardSetRange = { start: startIdx, end: endIdx };
+    // Update header text dynamically
+    const header = selectorSection.querySelector("h3");
+    if (header) {
+      header.textContent = `카드 학습 세트 선택 (${setSize}자 단위)`;
+    }
+    
+    // Render "전체" option
+    const allOpt = document.createElement("option");
+    allOpt.value = "all";
+    allOpt.textContent = `전체 (${poolSize}자)`;
+    dropdown.appendChild(allOpt);
+    
+    // Render sets based on setSize
+    const setNum = Math.ceil(poolSize / setSize);
+    for (let s = 0; s < setNum; s++) {
+      const startIdx = s * setSize;
+      const endIdx = Math.min((s + 1) * setSize, poolSize);
+      
+      const setOpt = document.createElement("option");
+      setOpt.value = `${startIdx},${endIdx}`;
+      setOpt.textContent = `세트 ${s + 1} (${startIdx + 1}~${endIdx})`;
+      dropdown.appendChild(setOpt);
+    }
+    
+    // Re-bind change listener by replacing dropdown with its clone to clean up old listeners
+    const newDropdown = dropdown.cloneNode(true);
+    dropdown.parentNode.replaceChild(newDropdown, dropdown);
+    
+    newDropdown.addEventListener("change", () => {
+      const val = newDropdown.value;
+      if (val === "all") {
+        selectedCardSetRange = null;
+      } else {
+        const [start, end] = val.split(",").map(Number);
+        selectedCardSetRange = { start, end };
+      }
     });
-    buttonsGrid.appendChild(setBtn);
   }
 }
 
@@ -521,13 +523,11 @@ function updateCardSetSelector(levelId) {
 function startStudySession(levelId, studyMode = "cumulative", sessionType = "quiz") {
   // Determine active set range first
   let activeRange = selectedCardSetRange;
-  if (sessionType === "flashcard" && !activeRange) {
-    const activeSetBtn = document.querySelector(".set-btn.active");
-    if (activeSetBtn && activeSetBtn.getAttribute("data-type") === "set") {
-      activeRange = {
-        start: parseInt(activeSetBtn.getAttribute("data-start"), 10),
-        end: parseInt(activeSetBtn.getAttribute("data-end"), 10)
-      };
+  if (!activeRange) {
+    const dropdown = document.getElementById("modal-set-dropdown");
+    if (dropdown && dropdown.value && dropdown.value !== "all") {
+      const [start, end] = dropdown.value.split(",").map(Number);
+      activeRange = { start, end };
     }
   }
 
@@ -873,6 +873,12 @@ function checkStudyAnswer() {
         <div class="msg-desc">훈음: ${q.meaning || ""}</div>
       </div>
     `;
+    
+    // Play correct answer sound effect
+    const correctAudio = new Audio('sfx/Retro - Chip Power.wav');
+    correctAudio.play().catch(err => {
+      console.warn("Audio play failed or was blocked by browser autoplay policy:", err);
+    });
     
     // Play celebratory confetti spark on correct answer occasionally
     confetti({
